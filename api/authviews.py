@@ -5,7 +5,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from api.serializers import RegisterSerializer, CustomTokenObtainPairSerializer, CustomTokenRefreshSerializer
+from api.authserializers import RegisterSerializer, CustomTokenObtainPairSerializer, CustomTokenRefreshSerializer
 
 class RegisterView(generics.CreateAPIView):
     
@@ -26,7 +26,6 @@ class LogoutView(APIView):
         try:
             refresh_token = request.COOKIES.get('refresh_token')
             if refresh_token:
-                print(refresh_token)
                 token = RefreshToken(refresh_token)
                 token.blacklist()
 
