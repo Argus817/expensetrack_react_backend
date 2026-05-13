@@ -49,14 +49,13 @@ REST_FRAMEWORK = {
 
 CORS_ALLOW_CREDENTIALS = True
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",  # Vite
-    "http://127.0.0.1:5173",
-]
+origins_str = os.getenv("ALLOWED_ORIGINS", "")
+origins_list = origins_str.split(",") if origins_str else []
 
-CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:5173",
-]
+CORS_ALLOWED_ORIGINS = origins_list
+
+
+CSRF_TRUSTED_ORIGINS = origins_list
 
 # Application definition
 
