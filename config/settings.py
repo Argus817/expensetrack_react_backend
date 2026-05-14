@@ -25,12 +25,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-u4ji+-lq)c3&lnkszvzt83c-c5)s(^_tp0$ik)b&#&_e@5kq17'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG", "False").lower() == "true"
 
-ALLOWED_HOSTS = []
+hosts_str = os.getenv("ALLOWED_HOSTS", "")
+hosts_list = hosts_str.split(",") if hosts_str else []
+
+ALLOWED_HOSTS = hosts_list
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),
@@ -53,7 +56,6 @@ origins_str = os.getenv("ALLOWED_ORIGINS", "")
 origins_list = origins_str.split(",") if origins_str else []
 
 CORS_ALLOWED_ORIGINS = origins_list
-
 
 CSRF_TRUSTED_ORIGINS = origins_list
 
@@ -116,30 +118,14 @@ WSGI_APPLICATION = 'config.wsgi.application'
 #     }
 # }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'mysql.connector.django',
-#         'NAME': os.getenv('DB_NAME'),
-#         'USER': os.getenv('DB_USER'),
-#         'PASSWORD': os.getenv('DB_PASSWORD'),
-#         'HOST': os.getenv('DB_HOST'),  
-#         'PORT': os.getenv('DB_PORT'),
-#         'OPTIONS': {
-#             'autocommit': True,
-#             'use_pure': True,
-#         },
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': os.getenv('DB_ENGINE'),
         'NAME': os.getenv('DB_NAME'),
         'USER': os.getenv('DB_USER'),
         'PASSWORD': os.getenv('DB_PASSWORD'),
         'HOST': os.getenv('DB_HOST'),  
         'PORT': os.getenv('DB_PORT'),
-        
     }
 }
 
