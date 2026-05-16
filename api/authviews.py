@@ -53,7 +53,7 @@ class CustomTokenObtainPairView(TokenObtainPairView):
                 value=refresh_token,
                 httponly=True,   
                 secure=True,     
-                samesite='Lax',  
+                samesite='None',  
                 path='/auth/token/'  
             )
             
